@@ -3,7 +3,8 @@
 import express from 'express'
 import connectDB from "./db/data.js";
 import dotenv from 'dotenv'
-const app=express();
+import { app } from './app.js';
+
 
 dotenv.config(
     {
