@@ -7,13 +7,13 @@ import path from "path";
 
 const registerUser = asyncHandler( async (req,res)=>{
     const {userName, fullName, email ,password } =req.body;
-    console.log("email :" ,email);
-    res.send(email);
+    //console.log(req.body);
+    //res.send(req.body);
     // if(fullName===""){
     //     throw new ApiError(404, "Your fullName is required");        
     // }
     if(
-        [userName,fullName,email,password].some((field)=> field ?.trim()==="") //check your all entities in one go
+        [userName,fullName,email,password].some((field)=>field ?.trim()==="") //check your all entities in one go
     ){
         throw new ApiError(404, "All fiels are compulsory ")
     }
@@ -34,9 +34,9 @@ const registerUser = asyncHandler( async (req,res)=>{
         throw new ApiError(400 , "Avatar file is required 400");
     }
 
-    console.log(avatarLocalPath)
-    console.log("req.files:", req.files);
-    console.log("avatarLocalPath:", avatarLocalPath);
+    // console.log(avatarLocalPath)
+     //console.log("req.files:", req.files);
+    // console.log("avatarLocalPath:", avatarLocalPath);
     const avatar = await uploadOnCloudinary(avatarLocalPath)
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
     
@@ -61,10 +61,12 @@ const registerUser = asyncHandler( async (req,res)=>{
     if(!userCreated){
         throw new ApiError(500, "Something went while registering the user ")
     }
-
+    console.log("User registered Successfully ")
     return res.status(201).json(
         new ApiResponse(200,{userCreated}, "User registered Successfully ")
+       
     )
+
 })
 
 export {registerUser};
